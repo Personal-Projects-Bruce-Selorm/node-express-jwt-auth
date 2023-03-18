@@ -1,0 +1,17 @@
+<div class="container">
+    <%- include('header') %>
+        <h2 class="text-muted">Welcome to our website! We're excited to have you here and hope you enjoy exploring our
+            content. Whether
+            you're looking for information, products, or services, we're here to help. Feel free to browse around and
+            don't hesitate to reach out if you have any questions. Thank you for visiting!</h2>
+        <%- include('footer') %>
+</div>
+
+<script defer>
+    //hide the login button when user is signed in
+    if (localStorage.getItem("isLoggedIn") === "true") {
+        const loginButton = document.querySelector(".login");
+        loginButton.classList.add('hidden')
+    }
+
+</script>

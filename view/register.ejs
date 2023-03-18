@@ -1,0 +1,72 @@
+<%- include('header') %>
+
+
+  <div class="container">
+    <form>
+      <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+
+      <div class="form-group py-3">
+        <label for="email">Email address</label>
+        <input type="text" class="form-control" name="email" placeholder="name@example.com">
+
+        <label for="" class="email error"></label>
+      </div>
+      <div class="form-group py-3">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password" placeholder="Password">
+
+        <label for="" class="password error"></label>
+      </div>
+
+
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+
+    </form>
+
+  </div>
+
+  <%- include("footer") %>
+
+    <script defer>
+      const form = document.querySelector("form");
+
+      const emailError = document.querySelector(".email.error");
+      const passwordError = document.querySelector(".password.error");
+
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        emailError.textContent = "";
+        passwordError.textContent = "";
+        //get form value
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(email, password)
+
+        try {
+          const res = await fetch("/register", {
+            method: "POST",
+            body: JSON.stringify({ email, password }),
+            headers: { "Content-Type": "application/json" }
+          });
+          var data = await res.json()
+          console.log(data)
+
+          if (data.errors) {
+            emailError.textContent = data.errors.email
+            passwordError.textContent = data.errors.password
+
+          }
+          if (data.user) {
+
+            location.assign('/')
+            localStorage.setItem("isLoggedIn",true)
+            
+          }
+
+        } catch (err) {
+          console.log(err)
+        }
+
+      })
+    </script>
